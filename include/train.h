@@ -3,23 +3,23 @@
 #define INCLUDE_TRAIN_H_
 
 class Train {
- private:
+private:
     struct Car {
         bool light;    // состояние лампочки
-        Car* next;
-        Car* prev; 
+        Car* next;     // указатель на следующий вагон
+        Car* prev;     // указатель на предыдущий вагон
     };
     
-    int countOp;       // счетчик шагов (переходов между вагонами)
-    Car* first;        // первый вагон поезда
-    Car* current;      // текущий вагон, в котором находится наблюдатель
+    int countOp;       // счетчик операций
+    Car* first;       // указатель на первый вагон
+    Car* current;      // указатель на текущий вагон
 
- public:
+public:
     Train();
     ~Train();
     void addCar(bool light);  // добавить вагон с указанным состоянием лампочки
-    int getLength();          // вычислить длину поезда
-    int getOpCount();         // вернуть количество переходов
+    int getLength();          // вычислить длину презда
+    int getOpCount();         // вернуть число переходов
 };
 
-#endif  // TRAIN_H
+#endif // TRAIN_H
