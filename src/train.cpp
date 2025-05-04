@@ -1,6 +1,5 @@
 // Copyright 2021 NNTU-CS
 #include "train.h"
-#include <algorithm>
 
 Train::Train() : countOp(0), first(nullptr), current(nullptr) {}
 
@@ -39,15 +38,38 @@ int Train::getLength() {
     countOp = 0;
     current = first;
 
+    bool allLightsOff = true;
+    Car* temp = first;
+    do {
+        if (temp->light) {
+            allLightsOff = false;
+            break;
+        }
+        temp = temp->next;
+    } while (temp != first);
+    
+    if (allLightsOff) {
+        int length = 0;
+        temp = first;
+        do {
+            length++;
+            temp = temp->next;
+            countOp++;
+        } while (temp != first);
+
+        countOp += length;
+        return length;
+    }
+
     if (!current->light) {
         current->light = true;
         countOp++;
     }
     
     int length = 0;
-    bool lengthFound = false;
+    bool found = false;
     
-    while (!lengthFound) {
+    while (!found) {
         int steps = 0;
         Car* temp = current;
         
@@ -55,24 +77,24 @@ int Train::getLength() {
             temp = temp->next;
             steps++;
             countOp++;
-
+            
             if (temp->light) {
                 temp->light = false;
                 countOp++;
-
+                
                 for (int i = 0; i < steps; i++) {
                     temp = temp->prev;
                     countOp++;
                 }
-
+                
                 if (temp == current && !current->light) {
                     length = steps;
-                    lengthFound = true;
+                    found = true;
                 }
                 
                 break;
             }
-        } while (temp != current && !lengthFound);
+        } while (temp != current && !found);
     }
     
     return length;
