@@ -4,17 +4,22 @@
 
 class Train {
  private:
-  struct Car {
-    bool light; // состояние лампочки
-    Car *next;
-    Car *prev;
-  };
-  int countOp; // счетчик шагов (число переходов из вагона в вагон)
-  Car *first; // точка входа в поезд (первый вагон)
+    struct Car {
+        bool light;    // состояние лампочки
+        Car* next;
+        Car* prev; 
+    };
+    
+    int countOp;       // счетчик шагов (переходов между вагонами)
+    Car* first;        // первый вагон поезда
+    Car* current;      // текущий вагон, в котором находится наблюдатель
+
  public:
-  Train();
-  void addCar(bool light); // добавить вагон с начальным состоянием лампочки
-  int getLength();          // вычислить длину поезда
-  int getOpCount();         // вернуть число переходов (из вагона в вагон)
+    Train();
+    ~Train();
+    void addCar(bool light);  // добавить вагон с указанным состоянием лампочки
+    int getLength();          // вычислить длину поезда
+    int getOpCount();         // вернуть количество переходов
 };
-#endif  // INCLUDE_TRAIN_H_
+
+#endif  // TRAIN_H
